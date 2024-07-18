@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './GeneralInfo.css'
+import Button from './Button';
 
 export default function General() {
 
@@ -28,9 +29,18 @@ export default function General() {
         setEmail(e.target.value);
     }
 
-    const handleDesc = (e) => {
-        setDesc(e.target.value);
+    const handleEdit = (e) => {
+
+        setSubmitState(0);
+
     }
+
+    const handleSubmit = (e) => {
+
+        setSubmitState(1);
+
+    }
+
 
     return (
         <>
@@ -70,11 +80,16 @@ export default function General() {
                 </div>
 
                 <div className="btns">
-                    <button onClick={() => setSubmitState(0)}>Edit</button>
-                    <button onClick={() => setSubmitState(1)}>Submit</button>
+                    <Button
+                        text='Edit'
+                        onClick={handleEdit} />
+                    <Button
+                        text='Submit'
+                        onClick={handleSubmit} />
                 </div>
 
-                </div>
+            </div>
+            <div className="seperator"></div>
         </>
     )
 
