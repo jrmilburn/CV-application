@@ -1,125 +1,84 @@
-import { useState } from 'react'
-import './GeneralInfo.css'
+import { useState } from 'react';
+import './GeneralInfo.css';
 import Button from './Button';
 
 export default function General() {
-
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [desc, setDesc] = useState('');
-    //0 is edit state and 1 is submit state
+    const [name, setName] = useState('Joseph Milburn');
+    const [phoneNumber, setPhoneNumber] = useState('0412337616');
+    const [email, setEmail] = useState('jrmilburn@outlook.com');
     const [submitState, setSubmitState] = useState(0);
 
-
-    const handleFirstName = (e) => {
-        setFirstName(e.target.value);
-    }
-
-    const handleLastName = (e) => {
-        setLastName(e.target.value);
-    }
+    const handleName = (e) => {
+        setName(e.target.value);
+    };
 
     const handlePhoneNumber = (e) => {
         setPhoneNumber(e.target.value);
-    }
+    };
 
     const handleEmail = (e) => {
         setEmail(e.target.value);
-    }
+    };
 
-    const handleEdit = (e) => {
-
-        setSubmitState(0);
-
-    }
-
-    const handleSubmit = (e) => {
-
-        setSubmitState(1);
-
-    }
-
+    const handleEdit = () => {
+        setSubmitState(!submitState);
+    };
 
     return (
         <>
             <div className='general-info'>
-
-                <Input
-                    label='First Name: '
-                    type='text'
-                    value={firstName}
-                    onChange={handleFirstName}
-                    submitState={submitState}
-                    id='first-name'/>
-                <Input
-                    label='Last Name: '
-                    type='text'
-                    value={lastName}
-                    onChange={handleLastName}
-                    submitState={submitState}
-                    id='last-name'/>
-
-                <div className="contact">
-                    <h2>Contact</h2>
+                <h2>{submitState ? '' : 'Contact Information'}</h2>
+                <div className="container">
                     <Input
-                        label='Phone Number:  '
+                        label='Name'
+                        type='text'
+                        value={name}
+                        onChange={handleName}
+                        submitState={submitState}
+                        id='name'
+                    />
+                    <Input
+                        label='Phone Number'
                         type='text'
                         value={phoneNumber}
                         onChange={handlePhoneNumber}
                         submitState={submitState}
-                        id='phone'/>
+                        id='phone'
+                    />
                     <Input
-                        label='Email:  '
+                        label='Email'
                         type='text'
                         value={email}
                         onChange={handleEmail}
                         submitState={submitState}
-                        id='email'/>
+                        id='email'
+                    />
                 </div>
-
                 <div className="btns">
                     <Button
                         text='Edit'
-                        onClick={handleEdit} />
-                    <Button
-                        text='Submit'
-                        onClick={handleSubmit} />
+                        onClick={handleEdit}
+                        submitted={submitState}
+                    />
+                    
                 </div>
-
             </div>
-            <div className="seperator"></div>
         </>
-    )
-
+    );
 }
 
-function Input({label, type, value, onChange, submitState, id}) {
-
-    if(!submitState) {
-
-        return (
-            <label className={id}>
-            {label}
-            <input 
+function Input({ label, type, value, onChange, submitState, id }) {
+    return !submitState ? (
+        <div className="input-group">
+            <input
+                id={id}
                 type={type}
                 value={value}
+                placeholder={label}
                 onChange={onChange}
-                />
-            </label>
-        )
-
-    } else {
-
-        if(id === 'first-name' || id === 'last-name') {
-            return (
-                <h3 className={id}>{value}</h3>
-            )
-        }
-        return (
-            <h3 className={id}>{label}{value}</h3>
-        )
-    }
-
+            />
+        </div>
+    ) : (
+        <h3 className={id}>{value}</h3>
+    );
 }
